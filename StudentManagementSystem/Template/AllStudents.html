@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Students</title>
+    <link rel="stylesheet" href="{% static 'CSS\footerCSS.css' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+{% if allStudents %}
+  <form method="post">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li><a href="http://127.0.0.1:8000/">Home</a></li>
+          <li><a href="/dashboard/">Dashboard</a></li>
+          <li class="dropdown">
+            <a class="active, dropdown-toggle" data-toggle="dropdown" href="">Student
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/register/">Registration</a></li>
+                <li class="active"><a href="/allStudents/">Student Details</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Assignments
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/addAssignment/">Add Assignment</a></li>
+                <li><a href="/allAssignments/">Assignment Details</a></li>
+                <li><a href="/fillAssignmentReport/">Fill Marks</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/studentReport/">Student-Wise</a></li>
+            </ul>
+        </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/accounts/logout/"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2 -->
+    <div class="container">
+        {% csrf_token %}
+        {{form.as_table}}
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">FirstName</th>
+            <th scope="col">MiddletName</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Pincode</th>
+            <th scope="col">MobileNumber</th>
+            <th scope="col">ParentName</th>
+            <th scope="col">Occupation</th><th></th>
+            <th scope="col">Class</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        {% for record in allStudents %}
+        <tbody>
+            <tr>
+                <td>{{record.id}}</td>
+                <td>{{record.FirstName}}</td>
+                <td>{{record.MiddletName}}</td>
+                <td>{{record.LastName}}</td>
+                <td>{{record.Gender}}</td>
+                <td>{{record.Pincode}}</td>
+                <td>{{record.MobileNumber}}</td>
+                <td>{{record.ParentName}}</td>
+                <td>{{record.Occupation}}</td>
+                <td>{{record.Class}}</td>
+                <td><a href="/studUpdate/{{record.id}}">Update</a>&nbsp;&nbsp;&nbsp;<a href="/deleteStudent/{{record.id}}">Delete</a></td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    </div>
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2 -->
+
+    <div class="footer">
+      <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li style="margin-top:6px;">&copy; Student Management System 2021</li>
+        </ul>
+      </div>
+      </nav>
+    </div>
+
+  </form>
+{% endif %}
+</body>
+</html>

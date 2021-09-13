@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Assignments</title>
+    <link rel="stylesheet" href="{% static 'CSS\footerCSS.css' %}">
+    <meta charset="utf-8">
+
+    <!-- For Nav Bar -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+{% if allAssignments %}
+  <form method="post">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li><a href="http://127.0.0.1:8000/">Home</a></li>
+          <li><a href="/dashboard/">Dashboard</a></li>
+          <li class="dropdown">
+            <a class="active, dropdown-toggle" data-toggle="dropdown" href="">Student
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/register/">Registration</a></li>
+                <li><a href="/allStudents/">Student Details</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Assignments
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/addAssignment/">Add Assignment</a></li>
+                <li class="active"><a href="/allAssignments/">Assignment Details</a></li>
+                <li><a href="/fillAssignmentReport/">Fill Marks</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/studentReport/">Student-Wise</a></li>
+            </ul>
+
+        </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/accounts/logout/"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2 -->
+    <div class="container">
+        {% csrf_token %}
+        {{form.as_table}}
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">AssignmentName</th>
+            <th scope="col">Class</th>
+            <th scope="col">StartDate</th>
+            <th scope="col">EndDate</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        {% for record in allAssignments %}
+        <tbody>
+            <tr>
+                <td>{{record.id}}</td>
+                <td>{{record.AssignmentName}}</td>
+                {% for classRecord in classes %}
+                    {% if record.Class == classRecord %}
+<!--                <td>{{record.Class}}</td>-->
+                <td>{{classRecord.Class}}</td>
+                    {% elif record.Class == classRecord %}
+                <td>{{classRecord.Class}}</td>
+                    {% elif record.Class == classRecord %}
+                <td>{{classRecord.Class}}</td>
+                    {% elif record.Class == classRecord %}
+                <td>{{classRecord.Class}}</td>
+                    {% endif%}
+                {% endfor %}
+                <td>{{record.StartDate}}</td>
+                <td>{{record.EndDate}}</td>
+                <td><a href="/updateAssignment/{{record.id}}">Update</a>&nbsp;&nbsp;&nbsp;<a href="/deleteAssignment/{{record.id}}">Delete</a></td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    </div>
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2 -->
+
+    <div class="footer">
+      <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li style="margin-top:6px;">&copy; Student Management System 2021</li>
+        </ul>
+      </div>
+      </nav>
+    </div>
+
+  </form>
+{% endif %}
+</body>
+</html>
